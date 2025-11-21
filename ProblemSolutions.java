@@ -121,15 +121,13 @@ public class ProblemSolutions {
         // Create temporary arrays
         // Calculate sizes of temporary arrays
         // Calculate sizes of temporary arrays
-    // Calculate sizes of temporary arrays
+
     int n1 = mid - left + 1;
     int n2 = right - mid;
     
-    // Create temporary arrays
     int[] leftArr = new int[n1];
     int[] rightArr = new int[n2];
     
-    // Copy data to temporary arrays
     for (int i = 0; i < n1; i++) {
         leftArr[i] = arr[left + i];
     }
@@ -137,29 +135,23 @@ public class ProblemSolutions {
         rightArr[j] = arr[mid + 1 + j];
     }
     
-    // Merge back into original array
     int i = 0, j = 0, m = left;
     
-    // Merge with priority: divisible by k comes first
     while (i < n1 && j < n2) {
         boolean leftDivisible = (leftArr[i] % k == 0);
         boolean rightDivisible = (rightArr[j] % k == 0);
         
         if (leftDivisible && !rightDivisible) {
-            // Left is divisible, right is not - take left
             arr[m++] = leftArr[i++];
         } else if (!leftDivisible && rightDivisible) {
-            // Right is divisible, left is not - take right
             arr[m++] = rightArr[j++];
         } else if (leftDivisible && rightDivisible) {
-            // Both divisible - take LARGER one (descending order)
             if (leftArr[i] >= rightArr[j]) {
                 arr[m++] = leftArr[i++];
             } else {
                 arr[m++] = rightArr[j++];
             }
         } else {
-            // Both not divisible - take SMALLER one (ascending order)
             if (leftArr[i] <= rightArr[j]) {
                 arr[m++] = leftArr[i++];
             } else {
@@ -168,12 +160,10 @@ public class ProblemSolutions {
         }
     }
     
-    // Copy remaining elements from left array
     while (i < n1) {
         arr[m++] = leftArr[i++];
     }
     
-    // Copy remaining elements from right array
     while (j < n2) {
         arr[m++] = rightArr[j++];
     }
