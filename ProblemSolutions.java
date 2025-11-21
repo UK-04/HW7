@@ -41,7 +41,22 @@ public class ProblemSolutions {
             // YOU CODE GOES HERE -- COMPLETE THE INNER LOOP OF THIS
             // "SELECTION SORT" ALGORITHM.
             // DO NOT FORGET TO ADD YOUR NAME / SECTION ABOVE
-
+            int targetIndex = i;
+            for (int j = i + 1; j < n; j++) {
+                if (ascending) {
+                    if (values[j] < values[targetIndex]) {
+                        targetIndex = j;
+                    }
+                } else {
+                    if (values[j] > values[targetIndex]) {
+                        targetIndex = j;
+                    }
+                }
+            }
+            // Swap the found minimum/maximum element with the first element
+            int temp = values[targetIndex];
+            values[targetIndex] = values[i];
+            values[i] = temp;
         }
 
     } // End class selectionSort
@@ -101,12 +116,68 @@ public class ProblemSolutions {
         // ALLOCATES AUXILIARY DATA STRUCTURES (TEMPORARY ARRAYS). IT WILL BE EASIER
         // TO CODE WITH A SPACE COMPLEXITY OF O(N LOG N), WHICH IS FINE FOR PURPOSES
         // OF THIS PROGRAMMING EXERCISES.
-
-        return;
-
+        // Create temporary arrays
+         // Create temporary arrays
+        // Create temporary arrays
+        // Calculate sizes of temporary arrays
+        // Calculate sizes of temporary arrays
+    // Calculate sizes of temporary arrays
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+    
+    // Create temporary arrays
+    int[] leftArr = new int[n1];
+    int[] rightArr = new int[n2];
+    
+    // Copy data to temporary arrays
+    for (int i = 0; i < n1; i++) {
+        leftArr[i] = arr[left + i];
     }
-
-
+    for (int j = 0; j < n2; j++) {
+        rightArr[j] = arr[mid + 1 + j];
+    }
+    
+    // Merge back into original array
+    int i = 0, j = 0, m = left;
+    
+    // Merge with priority: divisible by k comes first
+    while (i < n1 && j < n2) {
+        boolean leftDivisible = (leftArr[i] % k == 0);
+        boolean rightDivisible = (rightArr[j] % k == 0);
+        
+        if (leftDivisible && !rightDivisible) {
+            // Left is divisible, right is not - take left
+            arr[m++] = leftArr[i++];
+        } else if (!leftDivisible && rightDivisible) {
+            // Right is divisible, left is not - take right
+            arr[m++] = rightArr[j++];
+        } else if (leftDivisible && rightDivisible) {
+            // Both divisible - take LARGER one (descending order)
+            if (leftArr[i] >= rightArr[j]) {
+                arr[m++] = leftArr[i++];
+            } else {
+                arr[m++] = rightArr[j++];
+            }
+        } else {
+            // Both not divisible - take SMALLER one (ascending order)
+            if (leftArr[i] <= rightArr[j]) {
+                arr[m++] = leftArr[i++];
+            } else {
+                arr[m++] = rightArr[j++];
+            }
+        }
+    }
+    
+    // Copy remaining elements from left array
+    while (i < n1) {
+        arr[m++] = leftArr[i++];
+    }
+    
+    // Copy remaining elements from right array
+    while (j < n2) {
+        arr[m++] = rightArr[j++];
+    }
+    }
     /**
      * Method asteroidsDestroyed
      *
@@ -155,8 +226,14 @@ public class ProblemSolutions {
     public static boolean asteroidsDestroyed(int mass, int[] asteroids) {
 
         // YOUR CODE GOES HERE, CONSIDER USING ARRAYS.SORT()
-
-        return false;
+        Arrays.sort(asteroids);
+        for (int asteroid : asteroids) {
+            if (mass < asteroid) {
+                return false;
+            }
+            mass += asteroid;
+        }
+        return true;
 
     }
 
@@ -193,9 +270,18 @@ public class ProblemSolutions {
     public static int numRescueSleds(int[] people, int limit) {
 
         // YOUR CODE GOES HERE, CONSIDER USING ARRAYS.SORT
-
-        return -1;
-
+        Arrays.sort(people);
+        int left = 0;
+        int right = people.length - 1;
+        int sleds = 0;
+        while (left <= right) {
+            if (people[left] + people[right] <= limit) {
+                left++;
+            }
+            right--;
+            sleds++;
+        }
+        return sleds;
     }
 
 } // End Class ProblemSolutions
